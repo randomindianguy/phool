@@ -1,30 +1,13 @@
-const variantNames = {
-  A: "photo orbit",
-  B: "panorama wall",
-  C: "focus ring",
-};
-
-const params = new URLSearchParams(window.location.search);
-const requestedVariant = (params.get("variant") || "A").toUpperCase();
-const variant = variantNames[requestedVariant] ? requestedVariant : "A";
-
-document.body.dataset.variant = variant;
-
 const experience = document.querySelector(".experience");
 const doorButton = document.querySelector(".door-hit");
 const invitation = document.querySelector("#invitation-copy");
-const stateCopy = document.querySelector("#state-copy");
 const galleryOverlay = document.querySelector(".gallery-overlay");
 const videoOverlay = document.querySelector(".video-overlay");
 const videoTitle = document.querySelector("#video-title");
 const orbitScene = document.querySelector("#orbit-scene");
-const panoramaStrip = document.querySelector("#panorama-strip");
-const lanternFocus = document.querySelector("#lantern-focus");
-const lanternRing = document.querySelector("#lantern-ring");
 const galleryCount = document.querySelector("#gallery-count");
 const previousPhoto = document.querySelector("#gallery-previous");
 const nextPhoto = document.querySelector("#gallery-next");
-const variantLabel = document.querySelector("#variant-label");
 
 let stage = "door";
 let currentPhoto = 0;
@@ -42,25 +25,11 @@ function photoCard(index) {
 
 for (let index = 0; index < photoCount; index += 1) {
   orbitScene.append(photoCard(index));
-
-  const panoramaCard = photoCard(index);
-  panoramaCard.dataset.photo = String(index);
-  panoramaStrip.append(panoramaCard);
-
-  const lanternButton = document.createElement("button");
-  lanternButton.type = "button";
-  lanternButton.dataset.photo = String(index);
-  lanternButton.setAttribute("aria-label", `Show physical photo ${index + 1}`);
-  lanternButton.append(photoCard(index));
-  lanternRing.append(lanternButton);
 }
-
-lanternFocus.append(photoCard(0));
 
 function setStage(nextStage) {
   stage = nextStage;
   experience.dataset.stage = nextStage;
-  stateCopy.textContent = `${variant} · ${nextStage}`;
 
   galleryOverlay.setAttribute("aria-hidden", String(nextStage !== "gallery"));
   videoOverlay.setAttribute("aria-hidden", String(nextStage !== "video"));
@@ -82,19 +51,6 @@ function updateGallery() {
     card.classList.toggle("is-nearby", circularDistance === 1);
   });
 
-  const panoramaCards = [...panoramaStrip.children];
-  panoramaCards.forEach((card, index) => card.classList.toggle("is-current", index === normalized));
-  const activePanoramaCard = panoramaCards[normalized];
-  const panoramaWindow = document.querySelector(".panorama-window");
-  const stripOffset = panoramaWindow.clientWidth / 2 - activePanoramaCard.offsetLeft - activePanoramaCard.offsetWidth / 2;
-  panoramaStrip.style.transform = `translateX(${stripOffset}px)`;
-
-  lanternFocus.replaceChildren(photoCard(normalized));
-  lanternRing.style.transform = `rotate(${-normalized * 5}deg)`;
-  [...lanternRing.children].forEach((button, index) => {
-    button.style.opacity = index === normalized ? "1" : ".58";
-  });
-
   galleryCount.textContent = `${String(normalized + 1).padStart(2, "0")} / ${String(photoCount).padStart(2, "0")}`;
 }
 
@@ -102,20 +58,6 @@ function moveGallery(direction) {
   currentPhoto += direction;
   updateGallery();
 }
-
-function switchVariant(direction) {
-  const keys = Object.keys(variantNames);
-  const index = keys.indexOf(variant);
-  const nextVariant = keys[(index + direction + keys.length) % keys.length];
-  window.location.assign(`?variant=${nextVariant}`);
-}
-
-const variantKeys = Object.keys(variantNames);
-const variantIndex = variantKeys.indexOf(variant);
-document.querySelector("#previous-variant").href = `?variant=${variantKeys[(variantIndex - 1 + variantKeys.length) % variantKeys.length]}`;
-document.querySelector("#next-variant").href = `?variant=${variantKeys[(variantIndex + 1) % variantKeys.length]}`;
-variantLabel.href = `?variant=${variant}`;
-variantLabel.textContent = `${variant} · ${variantNames[variant]}`;
 
 doorButton.addEventListener("click", () => {
   if (stage !== "door") return;
@@ -131,20 +73,18 @@ document.querySelector('[data-action="gallery"]').addEventListener("click", () =
   currentPhoto = 0;
   updateGallery();
 
-  if (variant === "A") {
-    orbitScene.classList.remove("is-settling");
-    orbitScene.classList.add("is-preparing");
-    orbitScene.style.transform = "rotateY(-135deg)";
+  orbitScene.classList.remove("is-settling");
+  orbitScene.classList.add("is-preparing");
+  orbitScene.style.transform = "rotateY(-135deg)";
 
+  window.requestAnimationFrame(() => {
     window.requestAnimationFrame(() => {
-      window.requestAnimationFrame(() => {
-        orbitScene.classList.remove("is-preparing");
-        orbitScene.classList.add("is-settling");
-        orbitScene.style.transform = "rotateY(0deg)";
-        window.setTimeout(() => orbitScene.classList.remove("is-settling"), 1400);
-      });
+      orbitScene.classList.remove("is-preparing");
+      orbitScene.classList.add("is-settling");
+      orbitScene.style.transform = "rotateY(0deg)";
+      window.setTimeout(() => orbitScene.classList.remove("is-settling"), 1400);
     });
-  }
+  });
 });
 
 document.querySelectorAll("[data-video]").forEach((button) => {
@@ -161,13 +101,6 @@ document.querySelectorAll("[data-close-overlay]").forEach((button) => {
 
 previousPhoto.addEventListener("click", () => moveGallery(-1));
 nextPhoto.addEventListener("click", () => moveGallery(1));
-
-lanternRing.addEventListener("click", (event) => {
-  const button = event.target.closest("button[data-photo]");
-  if (!button) return;
-  currentPhoto = Number(button.dataset.photo);
-  updateGallery();
-});
 
 galleryOverlay.addEventListener("wheel", (event) => {
   if (stage !== "gallery") return;
@@ -208,15 +141,8 @@ window.addEventListener("keydown", (event) => {
     return;
   }
 
-  if (event.key === "ArrowLeft") {
-    if (stage === "gallery") moveGallery(-1);
-    else switchVariant(-1);
-  }
-
-  if (event.key === "ArrowRight") {
-    if (stage === "gallery") moveGallery(1);
-    else switchVariant(1);
-  }
+  if (stage === "gallery" && event.key === "ArrowLeft") moveGallery(-1);
+  if (stage === "gallery" && event.key === "ArrowRight") moveGallery(1);
 });
 
 updateGallery();

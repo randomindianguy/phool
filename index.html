@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <!-- Three variants of the main-picture 360 interaction, switchable with ?variant=A|B|C. -->
     <main class="experience" data-stage="door">
       <section class="door-stage" aria-label="A cottage door at night">
         <div class="door-image door-image--open" aria-hidden="true"></div>
@@ -57,22 +56,9 @@
         <button class="overlay-close" data-close-overlay type="button">Back to the wall</button>
         <p class="gallery-kicker">The pictures around you</p>
 
-        <div class="gallery gallery--orbit" data-gallery="A">
+        <div class="gallery gallery--orbit">
           <div class="orbit-scene" id="orbit-scene"></div>
           <p>Drag, scroll, or use the arrows to turn the circle.</p>
-        </div>
-
-        <div class="gallery gallery--panorama" data-gallery="B">
-          <div class="panorama-window"><div class="panorama-strip" id="panorama-strip"></div></div>
-          <p>Move sideways through the physical photo wall.</p>
-        </div>
-
-        <div class="gallery gallery--lantern" data-gallery="C">
-          <div class="lantern-stage">
-            <div class="lantern-focus" id="lantern-focus"></div>
-            <div class="lantern-ring" id="lantern-ring"></div>
-          </div>
-          <p>Turn the ring, then choose a picture to bring it forward.</p>
         </div>
 
         <div class="gallery-controls">
@@ -93,17 +79,7 @@
 
       <p class="invitation" aria-live="polite"><span class="invitation-dot" aria-hidden="true"></span><span id="invitation-copy">Open the door</span></p>
 
-      <aside class="state-readout" aria-live="polite">
-        <span>Wall interaction prototype</span>
-        <code id="state-copy">A · door</code>
-      </aside>
-
-      <nav class="variant-switcher" aria-label="Switch 360 photo interaction">
-        <a id="previous-variant" href="?variant=C" aria-label="Previous 360 interaction">←</a>
-        <a id="variant-label" href="?variant=A" aria-label="Restart current interaction">A · photo orbit</a>
-        <a id="next-variant" href="?variant=B" aria-label="Next 360 interaction">→</a>
-      </nav>
     </main>
-    <script src="./app.js?v=3"></script>
+    <script src="./app.js?v=4"></script>
   </body>
 </html>
