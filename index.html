@@ -3,13 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#24140c" />
-    <meta name="description" content="Prototype of a cottage memory wall with one 360 photo collection and four local videos." />
-    <title>The memory wall</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <meta name="theme-color" content="#1d110a" />
+    <meta name="description" content="A private cottage room made for one birthday." />
+    <title>Phool's birthday room</title>
+    <link rel="stylesheet" href="./styles.css?v=5" />
   </head>
-  <body>
-    <main class="experience" data-stage="door">
+  <body data-authenticated="false">
+    <section class="passcode-gate" id="passcode-gate" aria-label="Private entry">
+      <div class="gate-glow" aria-hidden="true"></div>
+      <form class="passcode-card" id="passcode-form">
+        <p class="gate-kicker">A private little room</p>
+        <h1>Knock softly.</h1>
+        <p>This place was made for one person.</p>
+        <label for="passcode-input">Passcode</label>
+        <div class="passcode-row">
+          <input id="passcode-input" name="passcode" type="password" autocomplete="current-password" required />
+          <button type="submit">Enter</button>
+        </div>
+        <p class="passcode-error" id="passcode-error" role="alert" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <main class="experience" data-stage="door" aria-hidden="true">
       <section class="door-stage" aria-label="A cottage door at night">
         <div class="door-image door-image--open" aria-hidden="true"></div>
         <div class="door-image door-image--closed" aria-hidden="true"></div>
@@ -17,7 +32,7 @@
         <button class="door-hit" type="button" aria-label="Open the cottage door"></button>
       </section>
 
-      <section class="wall-stage" aria-label="A cottage room with five framed memories">
+      <section class="wall-stage" aria-label="A cottage room with one video and seven photo frames">
         <div class="wall-art" aria-hidden="true"></div>
         <div class="room-shade" aria-hidden="true"></div>
 
@@ -26,60 +41,53 @@
             <filter id="thread-glow" x="-80%" y="-80%" width="260%" height="260%">
               <feGaussianBlur stdDeviation="0.78" result="wide-blur" />
               <feGaussianBlur in="SourceGraphic" stdDeviation="0.2" result="near-blur" />
-              <feMerge>
-                <feMergeNode in="wide-blur" />
-                <feMergeNode in="near-blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
+              <feMerge><feMergeNode in="wide-blur" /><feMergeNode in="near-blur" /><feMergeNode in="SourceGraphic" /></feMerge>
             </filter>
           </defs>
           <path class="rope rope--halo" d="M-3 91 C11 85 24 90 37 85 C47 81 53 75 52 68 C51 62 49 58 49 53" />
           <path id="rope-route" class="rope rope--core" d="M-3 91 C11 85 24 90 37 85 C47 81 53 75 52 68 C51 62 49 58 49 53" />
           <path class="rope rope--glints" d="M-3 91 C11 85 24 90 37 85 C47 81 53 75 52 68 C51 62 49 58 49 53" />
-          <circle class="rope-spark rope-spark--one" r="0.24">
-            <animateMotion dur="7s" repeatCount="indefinite"><mpath href="#rope-route" /></animateMotion>
-          </circle>
+          <circle class="rope-spark" r="0.24"><animateMotion dur="7s" repeatCount="indefinite"><mpath href="#rope-route" /></animateMotion></circle>
         </svg>
 
-        <div class="frame-hits" aria-label="Interactive picture frames">
-          <button class="frame-hit frame-hit--main" data-action="gallery" type="button" aria-label="Open the 360 degree photo collection">
-            <span>See every photo</span>
-          </button>
-          <button class="frame-hit frame-hit--video frame-hit--tl" data-video="1" type="button" aria-label="Play local video one"><span><b aria-hidden="true">▶</b></span></button>
-          <button class="frame-hit frame-hit--video frame-hit--bl" data-video="2" type="button" aria-label="Play local video two"><span><b aria-hidden="true">▶</b></span></button>
-          <button class="frame-hit frame-hit--video frame-hit--tr" data-video="3" type="button" aria-label="Play local video three"><span><b aria-hidden="true">▶</b></span></button>
-          <button class="frame-hit frame-hit--video frame-hit--br" data-video="4" type="button" aria-label="Play local video four"><span><b aria-hidden="true">▶</b></span></button>
+        <div class="frame-hits" aria-label="Interactive memory frames">
+          <button class="frame-hit frame-hit--main" data-video="main" type="button" aria-label="Play the main birthday video"><span class="video-marker" aria-hidden="true">▶</span></button>
+          <button class="frame-hit frame-hit--photo frame-hit--l1" data-photo="1" type="button" aria-label="Open photo one"><span class="photo-marker">1</span></button>
+          <button class="frame-hit frame-hit--photo frame-hit--l2" data-photo="2" type="button" aria-label="Open photo two"><span class="photo-marker">2</span></button>
+          <button class="frame-hit frame-hit--photo frame-hit--l3" data-photo="3" type="button" aria-label="Open photo three"><span class="photo-marker">3</span></button>
+          <button class="frame-hit frame-hit--photo frame-hit--r1" data-photo="4" type="button" aria-label="Open photo four"><span class="photo-marker">4</span></button>
+          <button class="frame-hit frame-hit--photo frame-hit--r2" data-photo="5" type="button" aria-label="Open photo five"><span class="photo-marker">5</span></button>
+          <button class="frame-hit frame-hit--photo frame-hit--r3" data-photo="6" type="button" aria-label="Open photo six"><span class="photo-marker">6</span></button>
+          <button class="frame-hit frame-hit--photo frame-hit--r4" data-photo="7" type="button" aria-label="Open photo seven"><span class="photo-marker">7</span></button>
         </div>
       </section>
 
-      <section class="gallery-overlay" aria-label="360 degree photo collection" aria-hidden="true">
+      <section class="photo-overlay" aria-label="Photo viewer" aria-hidden="true">
         <button class="overlay-close" data-close-overlay type="button">Back to the wall</button>
-        <p class="gallery-kicker">The pictures around you</p>
-
-        <div class="gallery gallery--orbit">
-          <div class="orbit-scene" id="orbit-scene"></div>
-          <p>Drag, scroll, or use the arrows to turn the circle.</p>
-        </div>
-
-        <div class="gallery-controls">
-          <button id="gallery-previous" type="button" aria-label="Previous photo">←</button>
-          <span id="gallery-count">01 / 08</span>
-          <button id="gallery-next" type="button" aria-label="Next photo">→</button>
-        </div>
+        <figure class="photo-viewer">
+          <img id="photo-display" alt="" />
+          <div class="media-placeholder" id="photo-placeholder">
+            <span>Photo <b id="photo-number">1</b></span>
+            <small>Add <code>assets/photo-01.jpg</code></small>
+          </div>
+          <figcaption id="photo-caption">Photo 1 of 7</figcaption>
+        </figure>
       </section>
 
-      <section class="video-overlay" aria-label="Local video player" aria-hidden="true">
+      <section class="video-overlay" aria-label="Main birthday video" aria-hidden="true">
         <button class="overlay-close" data-close-overlay type="button">Back to the wall</button>
-        <div class="video-placeholder">
-          <span class="video-play" aria-hidden="true">▶</span>
-          <strong id="video-title">Local video 1</strong>
-          <small>Its MP4 will play here, full-screen and with sound.</small>
+        <div class="video-player-shell">
+          <video id="main-video" controls playsinline preload="metadata"><source src="./assets/main-video.mp4" type="video/mp4" /></video>
+          <div class="media-placeholder video-fallback" id="video-placeholder">
+            <span class="video-play" aria-hidden="true">▶</span>
+            <strong>Main birthday video</strong>
+            <small>Add <code>assets/main-video.mp4</code></small>
+          </div>
         </div>
       </section>
 
       <p class="invitation" aria-live="polite"><span class="invitation-dot" aria-hidden="true"></span><span id="invitation-copy">Open the door</span></p>
-
     </main>
-    <script src="./app.js?v=4"></script>
+    <script src="./app.js?v=5"></script>
   </body>
 </html>

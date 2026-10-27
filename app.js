@@ -1,63 +1,90 @@
+const AUTH_KEY = "phool-auth-v1";
+const PASSCODE = "phoolsbday";
+
 const experience = document.querySelector(".experience");
+const gate = document.querySelector("#passcode-gate");
+const passcodeForm = document.querySelector("#passcode-form");
+const passcodeInput = document.querySelector("#passcode-input");
+const passcodeError = document.querySelector("#passcode-error");
 const doorButton = document.querySelector(".door-hit");
 const invitation = document.querySelector("#invitation-copy");
-const galleryOverlay = document.querySelector(".gallery-overlay");
+const photoOverlay = document.querySelector(".photo-overlay");
+const photoViewer = document.querySelector(".photo-viewer");
+const photoDisplay = document.querySelector("#photo-display");
+const photoNumber = document.querySelector("#photo-number");
+const photoCaption = document.querySelector("#photo-caption");
+const photoPlaceholder = document.querySelector("#photo-placeholder small code");
 const videoOverlay = document.querySelector(".video-overlay");
-const videoTitle = document.querySelector("#video-title");
-const orbitScene = document.querySelector("#orbit-scene");
-const galleryCount = document.querySelector("#gallery-count");
-const previousPhoto = document.querySelector("#gallery-previous");
-const nextPhoto = document.querySelector("#gallery-next");
-
+const videoShell = document.querySelector(".video-player-shell");
+const mainVideo = document.querySelector("#main-video");
 let stage = "door";
-let currentPhoto = 0;
-let dragStartX = null;
-let dragDelta = 0;
-const photoCount = 8;
 
-function photoCard(index) {
-  const card = document.createElement("div");
-  card.className = "photo-card";
-  card.style.setProperty("--i", String(index));
-  card.textContent = index === 0 ? "Main photo" : `Physical photo ${String(index + 1).padStart(2, "0")}`;
-  return card;
+function unlock() {
+  localStorage.setItem(AUTH_KEY, "yes");
+  document.body.dataset.authenticated = "true";
+  experience.setAttribute("aria-hidden", "false");
+  gate.setAttribute("aria-hidden", "true");
 }
 
-for (let index = 0; index < photoCount; index += 1) {
-  orbitScene.append(photoCard(index));
-}
+if (localStorage.getItem(AUTH_KEY) === "yes") unlock();
+else window.setTimeout(() => passcodeInput.focus(), 150);
+
+passcodeForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  if (passcodeInput.value === PASSCODE) {
+    passcodeError.textContent = "";
+    unlock();
+    return;
+  }
+  passcodeError.textContent = "That isn’t the right knock. Try again.";
+  passcodeInput.select();
+});
 
 function setStage(nextStage) {
   stage = nextStage;
   experience.dataset.stage = nextStage;
-
-  galleryOverlay.setAttribute("aria-hidden", String(nextStage !== "gallery"));
+  photoOverlay.setAttribute("aria-hidden", String(nextStage !== "photo"));
   videoOverlay.setAttribute("aria-hidden", String(nextStage !== "video"));
-
   if (nextStage === "door") invitation.textContent = "Open the door";
-  if (nextStage === "room") invitation.textContent = "Follow the thread. Choose a frame.";
+  if (nextStage === "room") invitation.textContent = "Follow the thread. Choose a memory.";
+  if (nextStage !== "video") mainVideo.pause();
 }
 
-function updateGallery() {
-  const normalized = ((currentPhoto % photoCount) + photoCount) % photoCount;
-  currentPhoto = normalized;
+function photoPath(index) {
+  return `./assets/photo-${String(index).padStart(2, "0")}.jpg`;
+}
 
-  orbitScene.style.transform = `rotateY(${-normalized * 45}deg)`;
-  const orbitCards = [...orbitScene.children];
-  orbitCards.forEach((card, index) => {
-    const directDistance = Math.abs(index - normalized);
-    const circularDistance = Math.min(directDistance, photoCount - directDistance);
-    card.classList.toggle("is-current", circularDistance === 0);
-    card.classList.toggle("is-nearby", circularDistance === 1);
+function wirePhoto(button) {
+  const index = Number(button.dataset.photo);
+  const path = photoPath(index);
+  const thumbnail = new Image();
+  thumbnail.onload = () => {
+    button.classList.add("has-photo");
+    button.style.backgroundImage = `url("${path}")`;
+  };
+  thumbnail.src = path;
+
+  button.addEventListener("click", () => {
+    if (stage !== "room") return;
+    photoNumber.textContent = String(index);
+    photoCaption.textContent = `Photo ${index} of 7`;
+    photoPlaceholder.textContent = `assets/photo-${String(index).padStart(2, "0")}.jpg`;
+    photoViewer.classList.remove("has-photo");
+    photoDisplay.removeAttribute("src");
+    photoDisplay.alt = `Memory photo ${index}`;
+    const fullPhoto = new Image();
+    fullPhoto.onload = () => {
+      photoDisplay.src = path;
+      photoViewer.classList.add("has-photo");
+    };
+    fullPhoto.src = path;
+    setStage("photo");
   });
-
-  galleryCount.textContent = `${String(normalized + 1).padStart(2, "0")} / ${String(photoCount).padStart(2, "0")}`;
 }
 
-function moveGallery(direction) {
-  currentPhoto += direction;
-  updateGallery();
-}
+document.querySelectorAll("[data-photo]").forEach(wirePhoto);
+mainVideo.addEventListener("loadedmetadata", () => videoShell.classList.add("has-video"));
+mainVideo.addEventListener("error", () => videoShell.classList.remove("has-video"));
 
 doorButton.addEventListener("click", () => {
   if (stage !== "door") return;
@@ -67,83 +94,16 @@ doorButton.addEventListener("click", () => {
   window.setTimeout(() => setStage("room"), 2100);
 });
 
-document.querySelector('[data-action="gallery"]').addEventListener("click", () => {
-  if (stage !== "room") return;
-  setStage("gallery");
-  currentPhoto = 0;
-  updateGallery();
-
-  orbitScene.classList.remove("is-settling");
-  orbitScene.classList.add("is-preparing");
-  orbitScene.style.transform = "rotateY(-135deg)";
-
-  window.requestAnimationFrame(() => {
-    window.requestAnimationFrame(() => {
-      orbitScene.classList.remove("is-preparing");
-      orbitScene.classList.add("is-settling");
-      orbitScene.style.transform = "rotateY(0deg)";
-      window.setTimeout(() => orbitScene.classList.remove("is-settling"), 1400);
-    });
-  });
-});
-
-document.querySelectorAll("[data-video]").forEach((button) => {
-  button.addEventListener("click", () => {
-    if (stage !== "room") return;
-    videoTitle.textContent = `Local video ${button.dataset.video}`;
-    setStage("video");
-  });
+document.querySelector('[data-video="main"]').addEventListener("click", () => {
+  if (stage === "room") setStage("video");
 });
 
 document.querySelectorAll("[data-close-overlay]").forEach((button) => {
   button.addEventListener("click", () => setStage("room"));
 });
 
-previousPhoto.addEventListener("click", () => moveGallery(-1));
-nextPhoto.addEventListener("click", () => moveGallery(1));
-
-galleryOverlay.addEventListener("wheel", (event) => {
-  if (stage !== "gallery") return;
-  event.preventDefault();
-  moveGallery(event.deltaY > 0 || event.deltaX > 0 ? 1 : -1);
-}, { passive: false });
-
-galleryOverlay.addEventListener("pointerdown", (event) => {
-  if (event.target.closest("button")) return;
-  dragStartX = event.clientX;
-  dragDelta = 0;
-  galleryOverlay.setPointerCapture(event.pointerId);
-});
-
-galleryOverlay.addEventListener("pointermove", (event) => {
-  if (dragStartX === null) return;
-  dragDelta = event.clientX - dragStartX;
-});
-
-galleryOverlay.addEventListener("pointerup", (event) => {
-  if (dragStartX === null) return;
-  galleryOverlay.releasePointerCapture(event.pointerId);
-  if (Math.abs(dragDelta) > 32) moveGallery(dragDelta < 0 ? 1 : -1);
-  dragStartX = null;
-  dragDelta = 0;
-});
-
-window.addEventListener("resize", () => {
-  if (stage === "gallery") updateGallery();
-});
-
 window.addEventListener("keydown", (event) => {
-  const target = event.target;
-  if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target?.isContentEditable) return;
-
-  if (event.key === "Escape" && (stage === "gallery" || stage === "video")) {
-    setStage("room");
-    return;
-  }
-
-  if (stage === "gallery" && event.key === "ArrowLeft") moveGallery(-1);
-  if (stage === "gallery" && event.key === "ArrowRight") moveGallery(1);
+  if (event.key === "Escape" && (stage === "photo" || stage === "video")) setStage("room");
 });
 
-updateGallery();
 setStage("door");
