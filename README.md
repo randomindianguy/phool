@@ -3,8 +3,8 @@
 An illustrated private cottage room for a birthday experience.
 
 The central frame opens one local birthday video. Seven smaller frames show
-seven local photos. A passcode gate remembers an approved browser using
-`localStorage`.
+seven local photos. Each photo can have its own Spotify track. A passcode gate
+remembers an approved browser using `localStorage`.
 
 ## Media files
 
@@ -18,6 +18,10 @@ Add these files to `assets/`:
 - `6.png`
 - `7.png`
 - `8.png`
+
+Paste the seven full Spotify track links into `songs.js`, beside the matching
+photo filename. Spotify embeds normally require the visitor to press play
+because browsers block cross-site autoplay.
 
 The current passcode is `phoolsbday`. Because this is a static site, the gate is
 for privacy-by-obscurity rather than strong authentication; the passcode is

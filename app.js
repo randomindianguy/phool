@@ -14,6 +14,9 @@ const photoDisplay = document.querySelector("#photo-display");
 const photoNumber = document.querySelector("#photo-number");
 const photoCaption = document.querySelector("#photo-caption");
 const photoPlaceholder = document.querySelector("#photo-placeholder small code");
+const spotifyPlayer = document.querySelector("#spotify-player");
+const songCard = document.querySelector(".song-card");
+const songNumber = document.querySelector("#song-number");
 const videoOverlay = document.querySelector(".video-overlay");
 const videoShell = document.querySelector(".video-player-shell");
 const mainVideo = document.querySelector("#main-video");
@@ -54,6 +57,21 @@ function photoPath(index) {
   return `./assets/${index + 1}.png`;
 }
 
+function spotifyEmbedUrl(url) {
+  if (!url) return "";
+  const match = url.match(/open\.spotify\.com\/(track|album|playlist|episode|show)\/([a-zA-Z0-9]+)/);
+  return match ? `https://open.spotify.com/embed/${match[1]}/${match[2]}?theme=0` : "";
+}
+
+function setSong(index) {
+  const filename = `${index + 1}.png`;
+  const embedUrl = spotifyEmbedUrl(window.PHOOL_SONGS?.[filename] || "");
+  songNumber.textContent = String(index);
+  songCard.classList.toggle("has-song", Boolean(embedUrl));
+  if (embedUrl) spotifyPlayer.src = embedUrl;
+  else spotifyPlayer.removeAttribute("src");
+}
+
 function wirePhoto(button) {
   const index = Number(button.dataset.photo);
   const path = photoPath(index);
@@ -78,6 +96,7 @@ function wirePhoto(button) {
       photoViewer.classList.add("has-photo");
     };
     fullPhoto.src = path;
+    setSong(index);
     setStage("photo");
   });
 }
@@ -99,11 +118,17 @@ document.querySelector('[data-video="main"]').addEventListener("click", () => {
 });
 
 document.querySelectorAll("[data-close-overlay]").forEach((button) => {
-  button.addEventListener("click", () => setStage("room"));
+  button.addEventListener("click", () => {
+    spotifyPlayer.removeAttribute("src");
+    setStage("room");
+  });
 });
 
 window.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && (stage === "photo" || stage === "video")) setStage("room");
+  if (event.key === "Escape" && (stage === "photo" || stage === "video")) {
+    spotifyPlayer.removeAttribute("src");
+    setStage("room");
+  }
 });
 
 setStage("door");

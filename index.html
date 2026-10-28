@@ -64,14 +64,24 @@
 
       <section class="photo-overlay" aria-label="Photo viewer" aria-hidden="true">
         <button class="overlay-close" data-close-overlay type="button">Back to the wall</button>
-        <figure class="photo-viewer">
-          <img id="photo-display" alt="" />
-          <div class="media-placeholder" id="photo-placeholder">
-            <span>Photo <b id="photo-number">1</b></span>
-            <small>Add <code>assets/2.png</code></small>
-          </div>
-          <figcaption id="photo-caption">Photo 1 of 7</figcaption>
-        </figure>
+        <div class="photo-experience">
+          <figure class="photo-viewer">
+            <img id="photo-display" alt="" />
+            <div class="media-placeholder" id="photo-placeholder">
+              <span>Photo <b id="photo-number">1</b></span>
+              <small>Add <code>assets/2.png</code></small>
+            </div>
+            <figcaption id="photo-caption">Photo 1 of 7</figcaption>
+          </figure>
+          <aside class="song-card" aria-label="Song paired with this photo">
+            <p>The song for this memory</p>
+            <iframe id="spotify-player" title="Spotify player" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
+            <div class="song-placeholder" id="song-placeholder">
+              <span>Song <b id="song-number">1</b></span>
+              <small>Add its Spotify track link in <code>songs.js</code></small>
+            </div>
+          </aside>
+        </div>
       </section>
 
       <section class="video-overlay" aria-label="Main birthday video" aria-hidden="true">
@@ -88,6 +98,7 @@
 
       <p class="invitation" aria-live="polite"><span class="invitation-dot" aria-hidden="true"></span><span id="invitation-copy">Open the door</span></p>
     </main>
-    <script src="./app.js?v=5"></script>
+    <script src="./songs.js?v=1"></script>
+    <script src="./app.js?v=6"></script>
   </body>
 </html>
