@@ -7,6 +7,7 @@ const passcodeForm = document.querySelector("#passcode-form");
 const passcodeInput = document.querySelector("#passcode-input");
 const passcodeError = document.querySelector("#passcode-error");
 const doorButton = document.querySelector(".door-hit");
+const mainFrame = document.querySelector('[data-video="main"]');
 const invitation = document.querySelector("#invitation-copy");
 const photoOverlay = document.querySelector(".photo-overlay");
 const photoViewer = document.querySelector(".photo-viewer");
@@ -22,6 +23,12 @@ const videoOverlay = document.querySelector(".video-overlay");
 const videoShell = document.querySelector(".video-player-shell");
 const mainVideo = document.querySelector("#main-video");
 let stage = "door";
+
+const mainPoster = new Image();
+mainPoster.onload = () => {
+  mainFrame.style.backgroundImage = 'url("./assets/8.png")';
+};
+mainPoster.src = "./assets/8.png";
 
 function unlock() {
   localStorage.setItem(AUTH_KEY, "yes");
@@ -90,7 +97,7 @@ function wirePhoto(button) {
   button.addEventListener("click", () => {
     if (stage !== "room") return;
     photoNumber.textContent = String(index);
-    photoCaption.textContent = `Photo ${index} of 7`;
+    photoCaption.textContent = `Photo ${index} of 6`;
     photoPlaceholder.textContent = `assets/${index + 1}.png`;
     photoViewer.classList.remove("has-photo");
     photoDisplay.removeAttribute("src");
@@ -118,7 +125,7 @@ doorButton.addEventListener("click", () => {
   window.setTimeout(() => setStage("room"), 2100);
 });
 
-document.querySelector('[data-video="main"]').addEventListener("click", () => {
+mainFrame.addEventListener("click", () => {
   if (stage === "room") setStage("video");
 });
 

@@ -7,5 +7,4 @@ window.PHOOL_SONGS = {
   "5.png": "https://open.spotify.com/track/7rpKFFRgEFbFD0H5SkiLfg?si=35f9f5159b2d4749",
   "6.png": "https://open.spotify.com/track/7dXY4oHP51599HTGQJHJJT?si=51c6d53c95e64e48",
   "7.png": "https://open.spotify.com/track/4eo3ayeUmwkuLTWpVMONQW?si=b351cc7b2b254b9d",
-  "8.png": null,
 };

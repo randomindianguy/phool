@@ -28,7 +28,7 @@ body[data-authenticated="false"] .experience { visibility: hidden; }
 .door-hit { position: absolute; z-index: 6; left: 34%; top: 6%; width: 32%; height: 80%; padding: 0; border: 0; border-radius: 48% 48% 3% 3%/18% 18% 3% 3%; outline: 0; cursor: pointer; background: transparent; }
 
 .wall-stage { z-index: 2; opacity: 0; pointer-events: none; transform: scale(1.09); transition: opacity 950ms ease,transform 1.35s cubic-bezier(.22,.75,.2,1); }
-.wall-art { background-image: url("./assets/memory-wall-eight-landscape.png"); transform: scale(1.012); }
+.wall-art { background-image: url("./assets/memory-wall-seven-landscape.png"); transform: scale(1.012); }
 .room-shade { z-index: 2; pointer-events: none; background: radial-gradient(circle at 50% 45%,transparent 55%,rgba(29,13,7,.18) 100%); }
 .experience[data-stage="opening"] .door-image--closed,.experience[data-stage="crossing"] .door-image--closed,.experience[data-stage="room"] .door-image--closed,.experience[data-stage="photo"] .door-image--closed,.experience[data-stage="video"] .door-image--closed { opacity: 0; transform: perspective(70rem) translateX(-2.5%) scaleX(.84) scale(1.02); filter: brightness(.74); }
 .experience[data-stage="opening"] .door-image--open,.experience[data-stage="crossing"] .door-image--open { transform: scale(1.06); }
@@ -60,7 +60,6 @@ body[data-authenticated="false"] .experience { visibility: hidden; }
 .frame-hit--r1 { left: 56.8%; top: 16.1%; width: 8.2%; height: 18.3%; border-radius: 30% 28% 22% 25%; }
 .frame-hit--r2 { left: 65.3%; top: 21.2%; width: 5.7%; height: 19.7%; border-radius: 33% 28% 30% 35%; }
 .frame-hit--r3 { left: 57.2%; top: 35.3%; width: 7.4%; height: 15.4%; border-radius: 46%; }
-.frame-hit--r4 { left: 63.9%; top: 43.1%; width: 8.4%; height: 13.6%; border-radius: 24% 30% 26% 31%; }
 
 .invitation { position: absolute; z-index: 30; left: 50%; bottom: 4.9rem; display: flex; align-items: center; gap: .55rem; min-height: 2.45rem; margin: 0; padding: .62rem .88rem; border: 1px solid rgba(255,234,185,.38); border-radius: 999px; color: var(--cream); background: rgba(37,20,11,.72); box-shadow: 0 .75rem 2rem rgba(7,3,2,.32); font-size: clamp(.76rem,1.2vw,.94rem); transform: translateX(-50%); transition: opacity 240ms ease,transform 240ms ease; backdrop-filter: blur(9px); pointer-events: none; }
 .invitation-dot { width: .46rem; height: .46rem; border: 1px solid #ffe3a0; border-radius: 50%; box-shadow: 0 0 .75rem #ffd068; }
@@ -110,7 +109,6 @@ body[data-authenticated="false"] .experience { visibility: hidden; }
   .frame-hit--r1 { left: 62.1%; top: 16.1%; width: 14.6%; height: 18.3%; }
   .frame-hit--r2 { left: 77.3%; top: 21.2%; width: 10.2%; height: 19.7%; }
   .frame-hit--r3 { left: 62.8%; top: 35.3%; width: 13.2%; height: 15.4%; }
-  .frame-hit--r4 { left: 74.8%; top: 43.1%; width: 15%; height: 13.6%; }
   .invitation { bottom: 4.7rem; }
 }
 @media (max-width: 900px) { .photo-experience { grid-template-columns: 1fr; gap: .5rem; padding: 3.2rem 0 1rem; } .photo-viewer { height: min(54svh,31rem); } .song-card { width: min(100%,32rem); justify-self: center; padding: .75rem; } }
