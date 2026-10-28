@@ -51,7 +51,7 @@ function setStage(nextStage) {
 }
 
 function photoPath(index) {
-  return `./assets/photo-${String(index).padStart(2, "0")}.jpg`;
+  return `./assets/${index + 1}.png`;
 }
 
 function wirePhoto(button) {
@@ -68,7 +68,7 @@ function wirePhoto(button) {
     if (stage !== "room") return;
     photoNumber.textContent = String(index);
     photoCaption.textContent = `Photo ${index} of 7`;
-    photoPlaceholder.textContent = `assets/photo-${String(index).padStart(2, "0")}.jpg`;
+    photoPlaceholder.textContent = `assets/${index + 1}.png`;
     photoViewer.classList.remove("has-photo");
     photoDisplay.removeAttribute("src");
     photoDisplay.alt = `Memory photo ${index}`;

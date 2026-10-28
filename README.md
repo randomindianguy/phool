@@ -10,14 +10,14 @@ seven local photos. A passcode gate remembers an approved browser using
 
 Add these files to `assets/`:
 
-- `main-video.mp4`
-- `photo-01.jpg`
-- `photo-02.jpg`
-- `photo-03.jpg`
-- `photo-04.jpg`
-- `photo-05.jpg`
-- `photo-06.jpg`
-- `photo-07.jpg`
+- `main.mp4`
+- `2.png`
+- `3.png`
+- `4.png`
+- `5.png`
+- `6.png`
+- `7.png`
+- `8.png`
 
 The current passcode is `phoolsbday`. Because this is a static site, the gate is
 for privacy-by-obscurity rather than strong authentication; the passcode is
