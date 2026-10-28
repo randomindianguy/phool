@@ -23,6 +23,9 @@ Paste the seven full Spotify track links into `songs.js`, beside the matching
 photo filename. Spotify embeds normally require the visitor to press play
 because browsers block cross-site autoplay.
 
+Use `null` when a photo intentionally has no song. `8.png` currently uses this
+setting and opens without the Spotify panel.
+
 The current passcode is `phoolsbday`. Because this is a static site, the gate is
 for privacy-by-obscurity rather than strong authentication; the passcode is
 present in the browser source.

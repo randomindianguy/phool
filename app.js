@@ -14,6 +14,7 @@ const photoDisplay = document.querySelector("#photo-display");
 const photoNumber = document.querySelector("#photo-number");
 const photoCaption = document.querySelector("#photo-caption");
 const photoPlaceholder = document.querySelector("#photo-placeholder small code");
+const photoExperience = document.querySelector(".photo-experience");
 const spotifyPlayer = document.querySelector("#spotify-player");
 const songCard = document.querySelector(".song-card");
 const songNumber = document.querySelector("#song-number");
@@ -65,8 +66,12 @@ function spotifyEmbedUrl(url) {
 
 function setSong(index) {
   const filename = `${index + 1}.png`;
-  const embedUrl = spotifyEmbedUrl(window.PHOOL_SONGS?.[filename] || "");
+  const trackUrl = window.PHOOL_SONGS?.[filename];
+  const hasNoSong = trackUrl === null;
+  const embedUrl = spotifyEmbedUrl(trackUrl || "");
   songNumber.textContent = String(index);
+  songCard.hidden = hasNoSong;
+  photoExperience.classList.toggle("has-no-song", hasNoSong);
   songCard.classList.toggle("has-song", Boolean(embedUrl));
   if (embedUrl) spotifyPlayer.src = embedUrl;
   else spotifyPlayer.removeAttribute("src");

@@ -71,6 +71,7 @@ body[data-authenticated="false"] .experience { visibility: hidden; }
 .experience[data-stage="photo"] .photo-overlay,.experience[data-stage="video"] .video-overlay { opacity: 1; visibility: visible; pointer-events: auto; }
 .overlay-close { position: absolute; z-index: 5; top: 1rem; right: 1rem; padding: .62rem .82rem; border: 1px solid rgba(255,238,194,.38); border-radius: 999px; color: var(--cream); background: rgba(42,22,12,.72); cursor: pointer; }
 .photo-experience { display: grid; grid-template-columns: minmax(0,1fr) minmax(17rem,22rem); gap: clamp(1rem,3vw,2.5rem); width: min(92vw,76rem); align-items: center; }
+.photo-experience.has-no-song { grid-template-columns: minmax(0,1fr); width: min(92vw,58rem); }
 .photo-viewer { position: relative; display: grid; min-width: 0; height: min(76vh,45rem); margin: 0; place-items: center; }
 .photo-viewer img { display: none; max-width: 100%; max-height: calc(100% - 2.5rem); border: .55rem solid #bd8748; border-radius: .55rem; box-shadow: 0 2rem 5rem rgba(5,2,1,.48); }
 .photo-viewer.has-photo img { display: block; }
