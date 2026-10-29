@@ -111,6 +111,6 @@ body[data-authenticated="false"] .experience { visibility: hidden; }
   .frame-hit--r3 { left: 62.8%; top: 35.3%; width: 13.2%; height: 15.4%; }
   .invitation { bottom: 4.7rem; }
 }
-@media (max-width: 900px) { .photo-experience { grid-template-columns: 1fr; gap: .5rem; padding: 3.2rem 0 1rem; } .photo-viewer { height: min(54svh,31rem); } .song-card { width: min(100%,32rem); justify-self: center; padding: .75rem; } }
+@media (max-width: 900px) { .photo-experience { grid-template-columns: 1fr; gap: .5rem; padding: 3.2rem 0 1rem; } .photo-viewer { min-height: 0; height: min(47svh,28rem); } .photo-viewer.has-photo img { position: absolute; top: 0; left: 50%; width: auto; height: calc(100% - 2rem); max-width: 100%; max-height: none; object-fit: contain; transform: translateX(-50%); } .song-card { width: min(100%,32rem); justify-self: center; padding: .75rem; } }
 @media (max-width: 620px) { .passcode-row { align-items: stretch; flex-direction: column; } .overlay-close { top: .65rem; right: .65rem; font-size: .68rem; } .photo-marker { width: 1.25rem; } }
 @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration: .01ms !important; animation-delay: 0ms !important; transition-duration: .01ms !important; } .rope-spark { display: none; } }
