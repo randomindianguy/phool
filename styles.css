@@ -45,21 +45,22 @@ body[data-authenticated="false"] .experience { visibility: hidden; }
 .rope-spark { fill: #fff2b6; filter: url(#thread-glow); }
 
 .frame-hits { position: absolute; z-index: 6; inset: 0; }
-.frame-hit { position: absolute; overflow: hidden; padding: 0; border: 0; outline: 0; cursor: pointer; color: var(--cream); background: transparent center/cover no-repeat; }
-.frame-hit::after { content: ""; position: absolute; inset: 0; opacity: 0; background: radial-gradient(circle at 50% 55%,rgba(255,224,147,.15),transparent 68%); transition: opacity 220ms ease; }
+.frame-hit { --frame-inset: 8%; position: absolute; overflow: visible; padding: 0; border: 0; outline: 0; cursor: pointer; color: var(--cream); background: transparent; }
+.frame-hit::before { content: ""; position: absolute; z-index: 0; inset: var(--frame-inset); border-radius: inherit; background: var(--frame-photo,transparent) center/cover no-repeat; box-shadow: inset 0 0 1.15rem rgba(36,16,6,.3); pointer-events: none; }
+.frame-hit::after { content: ""; position: absolute; z-index: 1; inset: var(--frame-inset); border-radius: inherit; opacity: 0; background: radial-gradient(circle at 50% 55%,rgba(255,224,147,.15),transparent 68%); transition: opacity 220ms ease; pointer-events: none; }
 .frame-hit:hover::after,.frame-hit:focus-visible::after { opacity: 1; }
 .video-marker,.photo-marker { position: absolute; z-index: 2; left: 50%; top: 50%; display: grid; place-items: center; border-radius: 50%; transform: translate(-50%,-50%); transition: transform 220ms ease,opacity 220ms ease,box-shadow 220ms ease; }
 .video-marker { width: clamp(2.4rem,4vw,3.8rem); aspect-ratio: 1; padding-left: .18rem; border: 1px solid rgba(255,241,204,.5); color: #352012; background: rgba(242,211,139,.9); box-shadow: 0 .5rem 1.6rem rgba(24,12,6,.3); font: .8rem/1 ui-sans-serif,system-ui,sans-serif; }
 .photo-marker { width: 1.45rem; aspect-ratio: 1; border: 1px solid rgba(255,238,193,.5); color: #fff0c7; background: rgba(47,26,14,.72); font: .62rem/1 ui-monospace,monospace; opacity: .78; backdrop-filter: blur(6px); }
 .frame-hit:hover .video-marker,.frame-hit:focus-visible .video-marker,.frame-hit:hover .photo-marker,.frame-hit:focus-visible .photo-marker { transform: translate(-50%,-50%) scale(1.08); box-shadow: 0 0 1.4rem rgba(255,207,101,.52); opacity: 1; }
 .frame-hit.has-photo .photo-marker { opacity: 0; }
-.frame-hit--main { left: 37.8%; top: 13.2%; width: 18.6%; height: 44.2%; border-radius: 48%; }
-.frame-hit--l1 { left: 28.1%; top: 16.5%; width: 9.1%; height: 13.8%; border-radius: 20% 28% 24% 22%; }
-.frame-hit--l2 { left: 25.4%; top: 30.4%; width: 10.2%; height: 12.5%; border-radius: 43% 36% 31% 37%; }
-.frame-hit--l3 { left: 27.1%; top: 43.4%; width: 10.7%; height: 12.8%; border-radius: 28% 25% 31% 24%; }
-.frame-hit--r1 { left: 56.8%; top: 16.1%; width: 8.2%; height: 18.3%; border-radius: 30% 28% 22% 25%; }
-.frame-hit--r2 { left: 65.3%; top: 21.2%; width: 5.7%; height: 19.7%; border-radius: 33% 28% 30% 35%; }
-.frame-hit--r3 { left: 57.2%; top: 35.3%; width: 7.4%; height: 15.4%; border-radius: 46%; }
+.frame-hit--main { --frame-inset: 7% 9% 8%; left: 37.8%; top: 13.2%; width: 18.6%; height: 44.2%; border-radius: 48%; }
+.frame-hit--l1 { --frame-inset: 12% 11% 14%; left: 28.1%; top: 16.5%; width: 9.1%; height: 13.8%; border-radius: 20% 28% 24% 22%; }
+.frame-hit--l2 { --frame-inset: 13% 12% 14%; left: 25.4%; top: 30.4%; width: 10.2%; height: 12.5%; border-radius: 43% 36% 31% 37%; }
+.frame-hit--l3 { --frame-inset: 13% 12% 15%; left: 27.1%; top: 43.4%; width: 10.7%; height: 12.8%; border-radius: 28% 25% 31% 24%; }
+.frame-hit--r1 { --frame-inset: 10% 12% 12%; left: 56.8%; top: 16.1%; width: 8.2%; height: 18.3%; border-radius: 30% 28% 22% 25%; }
+.frame-hit--r2 { --frame-inset: 10% 13% 12%; left: 65.3%; top: 21.2%; width: 5.7%; height: 19.7%; border-radius: 33% 28% 30% 35%; }
+.frame-hit--r3 { --frame-inset: 11% 13% 12%; left: 57.2%; top: 35.3%; width: 7.4%; height: 15.4%; border-radius: 46%; }
 
 .invitation { position: absolute; z-index: 30; left: 50%; bottom: 4.9rem; display: flex; align-items: center; gap: .55rem; min-height: 2.45rem; margin: 0; padding: .62rem .88rem; border: 1px solid rgba(255,234,185,.38); border-radius: 999px; color: var(--cream); background: rgba(37,20,11,.72); box-shadow: 0 .75rem 2rem rgba(7,3,2,.32); font-size: clamp(.76rem,1.2vw,.94rem); transform: translateX(-50%); transition: opacity 240ms ease,transform 240ms ease; backdrop-filter: blur(9px); pointer-events: none; }
 .invitation-dot { width: .46rem; height: .46rem; border: 1px solid #ffe3a0; border-radius: 50%; box-shadow: 0 0 .75rem #ffd068; }

@@ -28,7 +28,7 @@ let stage = "door";
 
 const mainPoster = new Image();
 mainPoster.onload = () => {
-  mainFrame.style.backgroundImage = `url("./assets/${MAIN_POSTER_FILE}")`;
+  mainFrame.style.setProperty("--frame-photo", `url("./assets/${MAIN_POSTER_FILE}")`);
 };
 mainPoster.src = `./assets/${MAIN_POSTER_FILE}`;
 
@@ -92,7 +92,7 @@ function wirePhoto(button) {
   const thumbnail = new Image();
   thumbnail.onload = () => {
     button.classList.add("has-photo");
-    button.style.backgroundImage = `url("${path}")`;
+    button.style.setProperty("--frame-photo", `url("${path}")`);
   };
   thumbnail.src = path;
 
