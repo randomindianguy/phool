@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#1d110a" />
     <meta name="description" content="A private cottage room made for one birthday." />
     <title>Phool's birthday room</title>
-    <link rel="stylesheet" href="./styles.css?v=9" />
+    <link rel="stylesheet" href="./styles.css?v=10" />
   </head>
   <body data-authenticated="false">
     <section class="passcode-gate" id="passcode-gate" aria-label="Private entry">
@@ -33,31 +33,33 @@
       </section>
 
       <section class="wall-stage" aria-label="A cottage room with one video portrait and six photo frames">
-        <div class="wall-art" aria-hidden="true"></div>
-        <div class="room-shade" aria-hidden="true"></div>
+        <div class="wall-canvas">
+          <div class="wall-art" aria-hidden="true"></div>
+          <div class="room-shade" aria-hidden="true"></div>
 
-        <svg class="willow-thread" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-          <defs>
-            <filter id="thread-glow" x="-80%" y="-80%" width="260%" height="260%">
-              <feGaussianBlur stdDeviation="0.78" result="wide-blur" />
-              <feGaussianBlur in="SourceGraphic" stdDeviation="0.2" result="near-blur" />
-              <feMerge><feMergeNode in="wide-blur" /><feMergeNode in="near-blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-            </filter>
-          </defs>
-          <path class="rope rope--halo" d="M-3 91 C11 85 24 90 37 85 C47 81 53 75 52 68 C51 62 49 58 49 53" />
-          <path id="rope-route" class="rope rope--core" d="M-3 91 C11 85 24 90 37 85 C47 81 53 75 52 68 C51 62 49 58 49 53" />
-          <path class="rope rope--glints" d="M-3 91 C11 85 24 90 37 85 C47 81 53 75 52 68 C51 62 49 58 49 53" />
-          <circle class="rope-spark" r="0.24"><animateMotion dur="7s" repeatCount="indefinite"><mpath href="#rope-route" /></animateMotion></circle>
-        </svg>
+          <svg class="willow-thread" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <filter id="thread-glow" x="-80%" y="-80%" width="260%" height="260%">
+                <feGaussianBlur stdDeviation="0.78" result="wide-blur" />
+                <feGaussianBlur in="SourceGraphic" stdDeviation="0.2" result="near-blur" />
+                <feMerge><feMergeNode in="wide-blur" /><feMergeNode in="near-blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+              </filter>
+            </defs>
+            <path class="rope rope--halo" d="M-3 91 C11 85 24 90 37 85 C47 81 53 75 52 68 C51 62 49 58 49 53" />
+            <path id="rope-route" class="rope rope--core" d="M-3 91 C11 85 24 90 37 85 C47 81 53 75 52 68 C51 62 49 58 49 53" />
+            <path class="rope rope--glints" d="M-3 91 C11 85 24 90 37 85 C47 81 53 75 52 68 C51 62 49 58 49 53" />
+            <circle class="rope-spark" r="0.24"><animateMotion dur="7s" repeatCount="indefinite"><mpath href="#rope-route" /></animateMotion></circle>
+          </svg>
 
-        <div class="frame-hits" aria-label="Interactive memory frames">
-          <button class="frame-hit frame-hit--main" data-video="main" type="button" aria-label="Play the main birthday video"><span class="video-marker" aria-hidden="true">▶</span></button>
-          <button class="frame-hit frame-hit--photo frame-hit--l1" data-photo="1" type="button" aria-label="Open photo one"><span class="photo-marker">1</span></button>
-          <button class="frame-hit frame-hit--photo frame-hit--l2" data-photo="2" type="button" aria-label="Open photo two"><span class="photo-marker">2</span></button>
-          <button class="frame-hit frame-hit--photo frame-hit--l3" data-photo="3" type="button" aria-label="Open photo three"><span class="photo-marker">3</span></button>
-          <button class="frame-hit frame-hit--photo frame-hit--r1" data-photo="4" type="button" aria-label="Open photo four"><span class="photo-marker">4</span></button>
-          <button class="frame-hit frame-hit--photo frame-hit--r2" data-photo="5" type="button" aria-label="Open photo five"><span class="photo-marker">5</span></button>
-          <button class="frame-hit frame-hit--photo frame-hit--r3" data-photo="6" type="button" aria-label="Open photo six"><span class="photo-marker">6</span></button>
+          <div class="frame-hits" aria-label="Interactive memory frames">
+            <button class="frame-hit frame-hit--main" data-video="main" type="button" aria-label="Play the main birthday video"><span class="video-marker" aria-hidden="true">▶</span></button>
+            <button class="frame-hit frame-hit--photo frame-hit--l1" data-photo="1" type="button" aria-label="Open photo one"><span class="photo-marker">1</span></button>
+            <button class="frame-hit frame-hit--photo frame-hit--l2" data-photo="2" type="button" aria-label="Open photo two"><span class="photo-marker">2</span></button>
+            <button class="frame-hit frame-hit--photo frame-hit--l3" data-photo="3" type="button" aria-label="Open photo three"><span class="photo-marker">3</span></button>
+            <button class="frame-hit frame-hit--photo frame-hit--r1" data-photo="4" type="button" aria-label="Open photo four"><span class="photo-marker">4</span></button>
+            <button class="frame-hit frame-hit--photo frame-hit--r2" data-photo="5" type="button" aria-label="Open photo five"><span class="photo-marker">5</span></button>
+            <button class="frame-hit frame-hit--photo frame-hit--r3" data-photo="6" type="button" aria-label="Open photo six"><span class="photo-marker">6</span></button>
+          </div>
         </div>
       </section>
 
