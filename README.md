@@ -13,7 +13,7 @@ Add these files to `assets/`:
 - `main.mp4`
 - `2.jpeg`
 - `3.jpeg`
-- `4.heif`
+- `4.jpeg`
 - `5.jpeg`
 - `6.jpeg`
 - `7.JPG`
@@ -22,9 +22,6 @@ Add these files to `assets/`:
 Paste the six full Spotify track links into `songs.js`, beside the matching
 photo filename. Spotify embeds normally require the visitor to press play
 because browsers block cross-site autoplay.
-
-Convert `4.heif` to `4.jpg` before the final publish if the site needs to work
-outside Safari. HEIF support remains inconsistent across browsers.
 
 The current passcode is `phoolsbday`. Because this is a static site, the gate is
 for privacy-by-obscurity rather than strong authentication; the passcode is

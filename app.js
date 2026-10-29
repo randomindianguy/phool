@@ -1,6 +1,6 @@
 const AUTH_KEY = "phool-auth-v1";
 const PASSCODE = "phoolsbday";
-const PHOTO_FILES = ["2.jpeg", "3.jpeg", "4.heif", "5.jpeg", "6.jpeg", "7.JPG"];
+const PHOTO_FILES = ["2.jpeg", "3.jpeg", "4.jpeg", "5.jpeg", "6.jpeg", "7.JPG"];
 const MAIN_POSTER_FILE = "8.jpg";
 
 const experience = document.querySelector(".experience");
