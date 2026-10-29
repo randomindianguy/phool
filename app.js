@@ -1,5 +1,7 @@
 const AUTH_KEY = "phool-auth-v1";
 const PASSCODE = "phoolsbday";
+const PHOTO_FILES = ["2.jpeg", "3.jpeg", "4.heif", "5.jpeg", "6.jpeg", "7.JPG"];
+const MAIN_POSTER_FILE = "8.jpg";
 
 const experience = document.querySelector(".experience");
 const gate = document.querySelector("#passcode-gate");
@@ -26,9 +28,9 @@ let stage = "door";
 
 const mainPoster = new Image();
 mainPoster.onload = () => {
-  mainFrame.style.backgroundImage = 'url("./assets/8.png")';
+  mainFrame.style.backgroundImage = `url("./assets/${MAIN_POSTER_FILE}")`;
 };
-mainPoster.src = "./assets/8.png";
+mainPoster.src = `./assets/${MAIN_POSTER_FILE}`;
 
 function unlock() {
   localStorage.setItem(AUTH_KEY, "yes");
@@ -62,7 +64,7 @@ function setStage(nextStage) {
 }
 
 function photoPath(index) {
-  return `./assets/${index + 1}.png`;
+  return `./assets/${PHOTO_FILES[index - 1]}`;
 }
 
 function spotifyEmbedUrl(url) {
@@ -72,7 +74,7 @@ function spotifyEmbedUrl(url) {
 }
 
 function setSong(index) {
-  const filename = `${index + 1}.png`;
+  const filename = PHOTO_FILES[index - 1];
   const trackUrl = window.PHOOL_SONGS?.[filename];
   const hasNoSong = trackUrl === null;
   const embedUrl = spotifyEmbedUrl(trackUrl || "");
@@ -98,7 +100,7 @@ function wirePhoto(button) {
     if (stage !== "room") return;
     photoNumber.textContent = String(index);
     photoCaption.textContent = `Photo ${index} of 6`;
-    photoPlaceholder.textContent = `assets/${index + 1}.png`;
+    photoPlaceholder.textContent = `assets/${PHOTO_FILES[index - 1]}`;
     photoViewer.classList.remove("has-photo");
     photoDisplay.removeAttribute("src");
     photoDisplay.alt = `Memory photo ${index}`;
