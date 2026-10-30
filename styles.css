@@ -108,5 +108,23 @@ body[data-authenticated="false"] .experience { visibility: hidden; }
   .invitation { bottom: 4.7rem; }
 }
 @media (max-width: 900px) { .photo-experience { grid-template-columns: 1fr; gap: .5rem; padding: 3.2rem 0 1rem; } .photo-viewer { min-height: 0; height: min(47svh,28rem); } .photo-viewer.has-photo img { position: absolute; top: 0; left: 50%; width: auto; height: calc(100% - 2rem); max-width: 100%; max-height: none; object-fit: contain; transform: translateX(-50%); } .song-card { width: min(100%,32rem); justify-self: center; padding: .75rem; } }
-@media (max-width: 620px) { .passcode-row { align-items: stretch; flex-direction: column; } .overlay-close { top: .65rem; right: .65rem; font-size: .68rem; } .photo-marker { width: 1.25rem; } }
+@media (max-width: 620px) {
+  .passcode-gate { padding: .85rem; }
+  .passcode-card { padding: 1.45rem; }
+  .passcode-row { align-items: stretch; flex-direction: column; }
+  .passcode-row button { min-height: 2.85rem; }
+  .door-hit { top: 5%; height: 82%; }
+  .wall-stage { overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; scrollbar-width: none; touch-action: pan-x; }
+  .wall-stage::-webkit-scrollbar { display: none; }
+  .wall-canvas { left: 0; transform: translateY(-50%) scale(1.012); transform-origin: left center; }
+  .frame-hit { overflow: visible; }
+  .frame-hit::after { inset: -.55rem; pointer-events: auto; }
+  .invitation { bottom: calc(.8rem + env(safe-area-inset-bottom)); width: max-content; max-width: calc(100vw - 1.5rem); justify-content: center; padding: .55rem .72rem; text-align: center; }
+  .photo-overlay,.video-overlay { padding: .75rem; align-items: start; }
+  .photo-experience { width: 100%; padding: 3.25rem .2rem calc(1rem + env(safe-area-inset-bottom)); }
+  .photo-viewer { height: min(44svh,23rem); }
+  .song-card-heading { align-items: flex-start; }
+  .overlay-close { top: calc(.55rem + env(safe-area-inset-top)); right: .65rem; min-height: 2.65rem; padding: .55rem .78rem; font-size: .72rem; }
+  .photo-marker { width: 1.25rem; }
+}
 @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration: .01ms !important; animation-delay: 0ms !important; transition-duration: .01ms !important; } .rope-spark { display: none; } }

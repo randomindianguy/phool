@@ -9,7 +9,9 @@ const passcodeForm = document.querySelector("#passcode-form");
 const passcodeInput = document.querySelector("#passcode-input");
 const passcodeError = document.querySelector("#passcode-error");
 const doorButton = document.querySelector(".door-hit");
+const wallStage = document.querySelector(".wall-stage");
 const mainFrame = document.querySelector('[data-video="main"]');
+const wallFrames = [...document.querySelectorAll(".frame-hit")];
 const invitation = document.querySelector("#invitation-copy");
 const photoOverlay = document.querySelector(".photo-overlay");
 const photoViewer = document.querySelector(".photo-viewer");
@@ -24,7 +26,10 @@ const songNumber = document.querySelector("#song-number");
 const videoOverlay = document.querySelector(".video-overlay");
 const videoShell = document.querySelector(".video-player-shell");
 const mainVideo = document.querySelector("#main-video");
+const phoneLayout = window.matchMedia("(max-width: 620px)");
 let stage = "door";
+let mobileWallCentered = false;
+let wallScrollFrame = 0;
 
 const mainPoster = new Image();
 mainPoster.onload = () => {
@@ -59,9 +64,47 @@ function setStage(nextStage) {
   photoOverlay.setAttribute("aria-hidden", String(nextStage !== "photo"));
   videoOverlay.setAttribute("aria-hidden", String(nextStage !== "video"));
   if (nextStage === "door") invitation.textContent = "Open the door";
-  if (nextStage === "room") invitation.textContent = "Follow the thread. Choose a memory.";
+  if (nextStage === "room") {
+    invitation.textContent = phoneLayout.matches ? "Swipe the wall. Tap a memory." : "Follow the thread. Choose a memory.";
+    if (phoneLayout.matches && !mobileWallCentered) {
+      window.requestAnimationFrame(() => {
+        const mainCenter = mainFrame.offsetLeft + mainFrame.offsetWidth / 2;
+        wallStage.scrollLeft = Math.max(0, mainCenter - wallStage.clientWidth / 2);
+        mobileWallCentered = true;
+      });
+    }
+  }
   if (nextStage !== "video") mainVideo.pause();
 }
+
+function mobileWallBounds() {
+  const frameLeft = Math.min(...wallFrames.map((frame) => frame.offsetLeft));
+  const frameRight = Math.max(...wallFrames.map((frame) => frame.offsetLeft + frame.offsetWidth));
+  const gutter = 24;
+  const min = Math.max(0, frameLeft - gutter);
+  const max = Math.max(min, frameRight + gutter - wallStage.clientWidth);
+  return { min, max };
+}
+
+function clampMobileWall() {
+  if (!phoneLayout.matches) return;
+  const { min, max } = mobileWallBounds();
+  const next = Math.min(max, Math.max(min, wallStage.scrollLeft));
+  if (Math.abs(next - wallStage.scrollLeft) > 1) wallStage.scrollLeft = next;
+}
+
+wallStage.addEventListener("scroll", () => {
+  if (!phoneLayout.matches || wallScrollFrame) return;
+  wallScrollFrame = window.requestAnimationFrame(() => {
+    wallScrollFrame = 0;
+    clampMobileWall();
+  });
+}, { passive: true });
+
+phoneLayout.addEventListener("change", () => {
+  mobileWallCentered = false;
+  if (stage === "room") setStage("room");
+});
 
 function photoPath(index) {
   return `./assets/${PHOTO_FILES[index - 1]}`;
